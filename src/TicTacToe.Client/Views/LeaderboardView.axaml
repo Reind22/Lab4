@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TicTacToe.Client.Core.ViewModels;assembly=TicTacToe.Client.Core"
+             xmlns:loc="clr-namespace:TicTacToe.Client.Localization"
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+             x:Class="TicTacToe.Client.Views.LeaderboardView"
+             x:DataType="vm:LeaderboardViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <DockPanel Grid.Row="0" Margin="0,0,0,16">
+            <Button DockPanel.Dock="Right"
+                    Content="{Binding RefreshButton, Source={x:Static loc:Localization.Instance}}"
+                    Command="{Binding RefreshCommand}"
+                    IsEnabled="{Binding !IsLoading}" />
+            <TextBlock Classes="h2"
+                       Text="{Binding LeaderboardTitle, Source={x:Static loc:Localization.Instance}}"
+                       VerticalAlignment="Center" />
+        </DockPanel>
+
+        <Border Grid.Row="1" Classes="card" Padding="0">
+            <Grid>
+                <DataGrid ItemsSource="{Binding Entries}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserResizeColumns="True"
+                          CanUserSortColumns="False"
+                          GridLinesVisibility="Horizontal">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="*" Binding="{Binding Nickname}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{Binding LeaderboardColumnPlayer, Source={x:Static loc:Localization.Instance}}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Binding="{Binding Wins}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{Binding LeaderboardColumnWins, Source={x:Static loc:Localization.Instance}}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="120" Binding="{Binding Losses}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{Binding LeaderboardColumnLosses, Source={x:Static loc:Localization.Instance}}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Binding="{Binding Draws}">
+                            <DataGridTextColumn.Header>
+                                <TextBlock Text="{Binding LeaderboardColumnDraws, Source={x:Static loc:Localization.Instance}}" />
+                            </DataGridTextColumn.Header>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <ProgressBar IsIndeterminate="True"
+                             VerticalAlignment="Top"
+                             IsVisible="{Binding IsLoading}" />
+            </Grid>
+        </Border>
+
+        <DockPanel Grid.Row="2" Margin="0,16,0,0">
+            <TextBlock DockPanel.Dock="Top"
+                       Text="{Binding StatusMessage}"
+                       Classes="error"
+                       IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                       Margin="0,0,0,8" />
+            <Button Content="{Binding BackToMenuButton, Source={x:Static loc:Localization.Instance}}"
+                    Command="{Binding BackToMenuCommand}"
+                    HorizontalAlignment="Right" />
+        </DockPanel>
+    </Grid>
+</UserControl>

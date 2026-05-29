@@ -1,0 +1,268 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Цветовая палитра приложения -->
+    <Styles.Resources>
+        <ResourceDictionary>
+            <!-- База: зелёный фон, светлые поверхности, золотой акцент (палитра HoteloApp) -->
+            <Color x:Key="AppBackgroundColor">#6D9773</Color>
+            <Color x:Key="AppSurfaceColor">#F1F4EE</Color>
+            <Color x:Key="AppSurfaceElevatedColor">#FFFFFF</Color>
+            <Color x:Key="AppBorderColor">#0C3B2E</Color>
+            <Color x:Key="AppGridLineColor">#0C3B2E</Color>
+
+            <!-- Текст: тёмно-зелёный — читаемо и на сейдж-фоне, и на светлых поверхностях -->
+            <Color x:Key="AppTextPrimaryColor">#0C3B2E</Color>
+            <Color x:Key="AppTextSecondaryColor">#2F5D4C</Color>
+            <Color x:Key="AppTextMutedColor">#5E7D6E</Color>
+
+            <!-- Акценты -->
+            <Color x:Key="AppAccentColor">#FFBA00</Color>
+            <Color x:Key="AppAccentHoverColor">#FFC933</Color>
+            <Color x:Key="AppAccentPressedColor">#D99E00</Color>
+            <Color x:Key="AppDangerColor">#C0392B</Color>
+            <Color x:Key="AppSuccessColor">#BB8A52</Color>
+
+            <!-- Игровые символы: тёмно-зелёный X vs песочный O — сильный контраст на белой клетке -->
+            <Color x:Key="AppXColor">#0C3B2E</Color>
+            <Color x:Key="AppOColor">#BB8A52</Color>
+
+            <!-- Кисти -->
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
+            <SolidColorBrush x:Key="AppSurfaceBrush" Color="{StaticResource AppSurfaceColor}" />
+            <SolidColorBrush x:Key="AppSurfaceElevatedBrush" Color="{StaticResource AppSurfaceElevatedColor}" />
+            <SolidColorBrush x:Key="AppBorderBrush" Color="{StaticResource AppBorderColor}" />
+            <SolidColorBrush x:Key="AppGridLineBrush" Color="{StaticResource AppGridLineColor}" />
+            <SolidColorBrush x:Key="AppTextPrimaryBrush" Color="{StaticResource AppTextPrimaryColor}" />
+            <SolidColorBrush x:Key="AppTextSecondaryBrush" Color="{StaticResource AppTextSecondaryColor}" />
+            <SolidColorBrush x:Key="AppTextMutedBrush" Color="{StaticResource AppTextMutedColor}" />
+            <SolidColorBrush x:Key="AppAccentBrush" Color="{StaticResource AppAccentColor}" />
+            <SolidColorBrush x:Key="AppAccentHoverBrush" Color="{StaticResource AppAccentHoverColor}" />
+            <SolidColorBrush x:Key="AppAccentPressedBrush" Color="{StaticResource AppAccentPressedColor}" />
+            <SolidColorBrush x:Key="AppDangerBrush" Color="{StaticResource AppDangerColor}" />
+            <SolidColorBrush x:Key="AppSuccessBrush" Color="{StaticResource AppSuccessColor}" />
+            <SolidColorBrush x:Key="AppXBrush" Color="{StaticResource AppXColor}" />
+            <SolidColorBrush x:Key="AppOBrush" Color="{StaticResource AppOColor}" />
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <!-- Window -->
+    <Style Selector="Window">
+        <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="Inter, $Default" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- TextBlock -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+    </Style>
+    <Style Selector="TextBlock.h1">
+        <Setter Property="FontSize" Value="34" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="0,0,0,16" />
+    </Style>
+    <Style Selector="TextBlock.h2">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+    </Style>
+    <Style Selector="TextBlock.muted">
+        <Setter Property="Foreground" Value="{StaticResource AppTextMutedBrush}" />
+    </Style>
+    <Style Selector="TextBlock.status">
+        <Setter Property="Foreground" Value="{StaticResource AppTextSecondaryBrush}" />
+        <Setter Property="FontStyle" Value="Italic" />
+    </Style>
+    <Style Selector="TextBlock.error">
+        <Setter Property="Foreground" Value="{StaticResource AppDangerBrush}" />
+    </Style>
+
+    <!-- TextBox: переопределяем фон в шаблоне FluentTheme + цвет плейсхолдера -->
+    <Style Selector="TextBox">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="MinHeight" Value="36" />
+    </Style>
+    <Style Selector="TextBox /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+    </Style>
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+    </Style>
+    <Style Selector="TextBox /template/ TextBlock#PART_Watermark">
+        <Setter Property="Foreground" Value="{StaticResource AppTextMutedBrush}" />
+    </Style>
+
+    <!-- Button (default) -->
+    <Style Selector="Button">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+    </Style>
+    <Style Selector="Button:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+    </Style>
+    <!-- Disabled-кнопка: видимый «погашенный» вид, не дефолтный тёмный из FluentTheme -->
+    <Style Selector="Button:disabled /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="TextElement.Foreground" Value="{StaticResource AppTextMutedBrush}" />
+        <Setter Property="Opacity" Value="0.7" />
+    </Style>
+    <Style Selector="Button.accent:disabled /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppTextMutedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppTextMutedBrush}" />
+        <Setter Property="TextElement.Foreground" Value="#F7F7F2" />
+        <Setter Property="Opacity" Value="0.85" />
+    </Style>
+
+    <!-- Button.accent — основная кнопка действий -->
+    <Style Selector="Button.accent">
+        <Setter Property="Background" Value="{StaticResource AppAccentBrush}" />
+        <Setter Property="Foreground" Value="#0C3B2E" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.accent:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppAccentHoverBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentHoverBrush}" />
+    </Style>
+    <Style Selector="Button.accent:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppAccentPressedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentPressedBrush}" />
+    </Style>
+
+    <!-- Button.cell — игровая клетка: квадрат без зазоров.
+         Background — реальный непрозрачный цвет, чтобы хит-тест клика
+         не уходил «насквозь» в FluentTheme-шаблоне Button. Решётка
+         рисуется отдельными Rectangle поверх в GameView. -->
+    <Style Selector="Button.cell">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="FontSize" Value="64" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.cell:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+    </Style>
+    <Style Selector="Button.cell:disabled /template/ ContentPresenter">
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="Button.cell.x">
+        <Setter Property="Foreground" Value="{StaticResource AppXBrush}" />
+    </Style>
+    <Style Selector="Button.cell.o">
+        <Setter Property="Foreground" Value="{StaticResource AppOBrush}" />
+    </Style>
+
+    <!-- ListBox -->
+    <Style Selector="ListBox">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="4" />
+    </Style>
+    <Style Selector="ListBoxItem">
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+    </Style>
+    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+        <Setter Property="Background" Value="{StaticResource AppAccentBrush}" />
+        <Setter Property="TextElement.Foreground" Value="#0C3B2E" />
+    </Style>
+
+    <!-- DataGrid -->
+    <Style Selector="DataGrid">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="RowBackground" Value="Transparent" />
+    </Style>
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+    <Style Selector="DataGridCell">
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+
+    <!-- ProgressBar -->
+    <Style Selector="ProgressBar">
+        <Setter Property="Foreground" Value="{StaticResource AppAccentBrush}" />
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="Height" Value="6" />
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+
+    <!-- Card-like Border -->
+    <Style Selector="Border.card">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+
+    <!-- ComboBox (для переключения языка и параметров подключения) -->
+    <Style Selector="ComboBox">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="10,6" />
+        <Setter Property="MinHeight" Value="32" />
+    </Style>
+    <Style Selector="ComboBox /template/ Border#Background">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
+    </Style>
+    <Style Selector="ComboBox:pointerover /template/ Border#Background">
+        <Setter Property="Background" Value="{StaticResource AppSurfaceElevatedBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AppAccentBrush}" />
+    </Style>
+    <Style Selector="ComboBox /template/ ContentControl#ContentPresenter">
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+    </Style>
+    <Style Selector="ComboBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource AppTextPrimaryBrush}" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+
+</Styles>

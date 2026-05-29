@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TicTacToe.Client.Core.ViewModels;assembly=TicTacToe.Client.Core"
+             xmlns:dto="clr-namespace:TicTacToe.Shared.Protocol.Dtos;assembly=TicTacToe.Shared"
+             xmlns:loc="clr-namespace:TicTacToe.Client.Localization"
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+             x:Class="TicTacToe.Client.Views.LobbyView"
+             x:DataType="vm:LobbyViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="0,8,0,0">
+        <DockPanel Grid.Row="0" Margin="0,0,0,16">
+            <Button DockPanel.Dock="Right"
+                    Content="{Binding RefreshButton, Source={x:Static loc:Localization.Instance}}"
+                    Command="{Binding RefreshCommand}"
+                    IsEnabled="{Binding !IsRefreshing}" />
+            <TextBlock Classes="h2"
+                       Text="{Binding LobbyTitle, Source={x:Static loc:Localization.Instance}}"
+                       VerticalAlignment="Center" />
+        </DockPanel>
+
+        <Border Grid.Row="1" Classes="card" Padding="6">
+            <ListBox ItemsSource="{Binding Games}"
+                     SelectedItem="{Binding SelectedGame, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="dto:GameInfo">
+                        <Grid ColumnDefinitions="*,Auto" Margin="2">
+                            <StackPanel Grid.Column="0" Spacing="2">
+                                <TextBlock Text="{Binding CreatedBy}" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding GameId}" Classes="muted" FontSize="11" />
+                            </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding CreatedAt, StringFormat='{}{0:HH:mm:ss}'}"
+                                       Classes="muted"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <ProgressBar Grid.Row="2" IsIndeterminate="True"
+                     Margin="0,12,0,0"
+                     IsVisible="{Binding IsRefreshing}" />
+
+        <DockPanel Grid.Row="3" Margin="0,16,0,0">
+            <TextBlock DockPanel.Dock="Top"
+                       Text="{Binding StatusMessage}"
+                       Classes="error"
+                       IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,8" />
+            <Button Content="{Binding LobbyJoinButton, Source={x:Static loc:Localization.Instance}}"
+                    Classes="accent"
+                    Command="{Binding JoinGameCommand}"
+                    HorizontalAlignment="Stretch" />
+        </DockPanel>
+    </Grid>
+</UserControl>

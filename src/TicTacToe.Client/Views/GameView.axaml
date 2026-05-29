@@ -1,0 +1,167 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TicTacToe.Client.Core.ViewModels;assembly=TicTacToe.Client.Core"
+             xmlns:logic="clr-namespace:TicTacToe.Shared.Logic;assembly=TicTacToe.Shared"
+             xmlns:conv="clr-namespace:TicTacToe.Client.Converters"
+             xmlns:loc="clr-namespace:TicTacToe.Client.Localization"
+             mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="640"
+             x:Class="TicTacToe.Client.Views.GameView"
+             x:DataType="vm:GameViewModel">
+
+    <UserControl.Resources>
+        <conv:CellStateToTextConverter x:Key="CellText" />
+        <conv:CellStateEqualsConverter x:Key="CellIs" />
+        <conv:CellStateToBrushConverter x:Key="CellBrush" />
+        <conv:GameStatusToTextConverter x:Key="StatusText" />
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch"
+          MaxWidth="640" RowDefinitions="Auto,*,Auto">
+
+        <!-- Шапка -->
+        <Border Grid.Row="0" Classes="card" Margin="0,0,0,12" Padding="16">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding GameYouPlayAs, Source={x:Static loc:Localization.Instance}}"
+                               Classes="muted" VerticalAlignment="Center" />
+                    <Border Width="34" Height="34" CornerRadius="17"
+                            Background="{DynamicResource AppSurfaceElevatedBrush}">
+                        <TextBlock Text="{Binding YourSymbol, Converter={StaticResource CellText}}"
+                                   FontSize="18" FontWeight="Bold"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </StackPanel>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding StatusMessage}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Classes="h2" Margin="0" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding GameOpponentLabel, Source={x:Static loc:Localization.Instance}}"
+                               Classes="muted" />
+                    <TextBlock Text="{Binding OpponentNickname}" Classes="muted" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Поле 3×3 — фиксированный квадрат 480×480 по центру -->
+        <Grid Grid.Row="1"
+              Width="480" Height="480"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <!-- Подложка-карточка с обводкой -->
+            <Border Background="{DynamicResource AppSurfaceElevatedBrush}"
+                    BorderBrush="{DynamicResource AppBorderBrush}"
+                    BorderThickness="2"
+                    CornerRadius="12" />
+
+            <!-- 9 ячеек как TextBlock'и в Grid 3×3.
+                 Никаких Button — клик целиком обрабатывает PointerPressed
+                 на этом Grid'е (вычисляет row/col по координатам клика).
+                 Background="#01000000" — почти прозрачный, но hit-testable. -->
+            <Grid Margin="2"
+                  Background="#01000000"
+                  RowDefinitions="*,*,*"
+                  ColumnDefinitions="*,*,*"
+                  PointerPressed="OnFieldPointerPressed">
+
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="{Binding Cells[0].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[0].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{Binding Cells[1].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[1].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="0" Grid.Column="2"
+                           Text="{Binding Cells[2].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[2].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="{Binding Cells[3].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[3].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding Cells[4].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[4].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="1" Grid.Column="2"
+                           Text="{Binding Cells[5].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[5].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="{Binding Cells[6].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[6].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="2" Grid.Column="1"
+                           Text="{Binding Cells[7].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[7].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+                <TextBlock Grid.Row="2" Grid.Column="2"
+                           Text="{Binding Cells[8].State, Converter={StaticResource CellText}}" Foreground="{Binding Cells[8].State, Converter={StaticResource CellBrush}}"
+                           FontSize="80" FontWeight="Bold"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False" />
+            </Grid>
+
+            <!-- Линии-разделители 3×3 решётки -->
+            <Rectangle Fill="{DynamicResource AppGridLineBrush}"
+                       Width="3" HorizontalAlignment="Left"
+                       Margin="160,12,0,12"
+                       IsHitTestVisible="False" />
+            <Rectangle Fill="{DynamicResource AppGridLineBrush}"
+                       Width="3" HorizontalAlignment="Left"
+                       Margin="320,12,0,12"
+                       IsHitTestVisible="False" />
+            <Rectangle Fill="{DynamicResource AppGridLineBrush}"
+                       Height="3" VerticalAlignment="Top"
+                       Margin="12,160,12,0"
+                       IsHitTestVisible="False" />
+            <Rectangle Fill="{DynamicResource AppGridLineBrush}"
+                       Height="3" VerticalAlignment="Top"
+                       Margin="12,320,12,0"
+                       IsHitTestVisible="False" />
+
+            <!-- Оверлей конца партии -->
+            <Border Background="#CC0C3B2E"
+                    IsVisible="{Binding IsGameOver}"
+                    CornerRadius="12">
+                <Border Classes="card" MaxWidth="380"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Spacing="14" HorizontalAlignment="Stretch">
+                        <TextBlock Classes="h1" Margin="0"
+                                   Text="{Binding StatusMessage}"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding Status, Converter={StaticResource StatusText}}"
+                                   Classes="muted" HorizontalAlignment="Center" />
+                        <Button Content="{Binding GameRematchButton, Source={x:Static loc:Localization.Instance}}"
+                                Classes="accent"
+                                Command="{Binding RematchCommand}"
+                                HorizontalAlignment="Stretch" />
+                        <Button Content="{Binding BackToMenuButton, Source={x:Static loc:Localization.Instance}}"
+                                Command="{Binding BackToMenuCommand}"
+                                HorizontalAlignment="Stretch" />
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Grid>
+
+        <!-- Подвал -->
+        <DockPanel Grid.Row="2" Margin="0,12,0,0">
+            <Button Content="{Binding BackToMenuButton, Source={x:Static loc:Localization.Instance}}"
+                    DockPanel.Dock="Right"
+                    Command="{Binding BackToMenuCommand}" />
+        </DockPanel>
+    </Grid>
+</UserControl>
