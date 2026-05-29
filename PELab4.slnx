@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TicTacToe.Client.Core/TicTacToe.Client.Core.csproj" />
+    <Project Path="src/TicTacToe.Client/TicTacToe.Client.csproj" />
+    <Project Path="src/TicTacToe.Server/TicTacToe.Server.csproj" />
+    <Project Path="src/TicTacToe.Shared/TicTacToe.Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TicTacToe.Client.Core.Tests/TicTacToe.Client.Core.Tests.csproj" />
+    <Project Path="tests/TicTacToe.Server.Tests/TicTacToe.Server.Tests.csproj" />
+    <Project Path="tests/TicTacToe.Shared.Tests/TicTacToe.Shared.Tests.csproj" />
+  </Folder>
+</Solution>

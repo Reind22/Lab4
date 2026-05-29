@@ -1,0 +1,22 @@
+# Build results
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# Local runtime database
+leaderboard.db
+*.db-shm
+*.db-wal
+
+# OS
+.DS_Store
+Thumbs.db
