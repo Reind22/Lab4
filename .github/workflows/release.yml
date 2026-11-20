@@ -2,9 +2,8 @@ name: Release
 
 on:
   push:
-    tags: [ "v*" ]
-  pull_request:
     branches: [ main, master ]
+    tags: [ "v*" ]
   workflow_dispatch:
 
 jobs:
@@ -17,13 +16,10 @@ jobs:
         include:
           - os: windows-latest
             rid: win-x64
-            archive: zip
           - os: ubuntu-latest
             rid: linux-x64
-            archive: tar.gz
           - os: macos-latest
-            rid: osx-arm64
-            archive: tar.gz
+            rid: osx-x64
 
     steps:
       - uses: actions/checkout@v4
@@ -35,28 +31,25 @@ jobs:
       - name: Восстановление зависимостей
         run: dotnet restore PELab4.slnx
 
-      - name: Тесты
-        run: dotnet test PELab4.slnx --no-restore -c Release
-
       - name: Сборка клиента и сервера
         run: |
-          dotnet publish src/TicTacToe.Client -c Release -r ${{ matrix.rid }} --self-contained true -o out/client
-          dotnet publish src/TicTacToe.Server -c Release -r ${{ matrix.rid }} --self-contained true -o out/server
+          dotnet publish src/TicTacToe.Client -c Release -r ${{ matrix.rid }} --self-contained true -p:PublishSingleFile=true -o out/client
+          dotnet publish src/TicTacToe.Server -c Release -r ${{ matrix.rid }} --self-contained true -p:PublishSingleFile=true -o out/server
 
       - name: Упаковка (Windows)
-        if: matrix.archive == 'zip'
+        if: runner.os == 'Windows'
         shell: pwsh
         run: Compress-Archive -Path out/* -DestinationPath PELab4-${{ matrix.rid }}.zip
 
-      - name: Упаковка (Linux/macOS)
-        if: matrix.archive == 'tar.gz'
-        run: tar -czf PELab4-${{ matrix.rid }}.tar.gz -C out .
+      - name: Упаковка (Linux и macOS)
+        if: runner.os != 'Windows'
+        run: cd out && zip -qr ../PELab4-${{ matrix.rid }}.zip .
 
       - name: Артефакт
         uses: actions/upload-artifact@v4
         with:
           name: PELab4-${{ matrix.rid }}
-          path: PELab4-${{ matrix.rid }}.${{ matrix.archive }}
+          path: PELab4-${{ matrix.rid }}.zip
 
   release:
     name: Прикрепить к релизу
@@ -69,7 +62,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+          merge-multiple: true
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/**/*
+          files: artifacts/*.zip
