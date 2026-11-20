@@ -68,7 +68,7 @@ public sealed partial class LobbyViewModel : ObservableObject, IDisposable
     }
 
     private void OnServerError(object? sender, ErrorMessage error) =>
-        StatusMessage = $"Сервер: {error.Code} — {error.Message}";
+        StatusMessage = error.Message;
 
     public void Dispose()
     {

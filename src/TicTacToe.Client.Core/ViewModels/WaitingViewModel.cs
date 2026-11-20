@@ -32,7 +32,7 @@ public sealed partial class WaitingViewModel : ObservableObject, IDisposable
         _navigation.NavigateTo(_gameFactory(e));
 
     private void OnServerError(object? sender, ErrorMessage error) =>
-        Message = $"Сервер: {error.Code} — {error.Message}";
+        Message = error.Message;
 
     public void Dispose()
     {

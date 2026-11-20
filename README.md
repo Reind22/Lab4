@@ -89,12 +89,14 @@ tests/
 
 Скриншоты приложения находятся в [`docs/images/`](docs/images):
 
-- `main-menu.png` — главное меню
-- `lobby.png` — список открытых игр
-- `waiting.png` — ожидание соперника
-- `game.png` — игра в процессе
-- `game-over.png` — экран победы / ничьей
-- `leaderboard.png` — таблица рекордов
+- [`main-menu.png`](docs/images/main-menu.png) — главное меню
+- [`waiting.png`](docs/images/waiting.png) — ожидание соперника
+- [`lobby.png`](docs/images/lobby.png) — список открытых игр
+- [`game.png`](docs/images/game.png) — игровое поле
+
+| Меню | Ожидание | Лобби | Игра |
+|---|---|---|---|
+| ![Меню](docs/images/main-menu.png) | ![Ожидание](docs/images/waiting.png) | ![Лобби](docs/images/lobby.png) | ![Игра](docs/images/game.png) |
 
 ## Разработка
 

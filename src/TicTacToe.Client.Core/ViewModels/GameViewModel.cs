@@ -115,7 +115,7 @@ public sealed partial class GameViewModel : ObservableObject, IDisposable
     }
 
     private void OnServerError(object? sender, ErrorMessage error) =>
-        StatusMessage = $"Сервер: {error.Code} — {error.Message}";
+        StatusMessage = error.Message;
 
     private void UpdateClickability()
     {

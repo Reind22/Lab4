@@ -69,6 +69,6 @@ public class LobbyViewModelTests
     {
         var vm = CreateVm();
         _session.Raise(s => s.ServerError += null, this, new ErrorMessage("E_X", "fail"));
-        Assert.Contains("E_X", vm.StatusMessage);
+        Assert.Contains("fail", vm.StatusMessage);
     }
 }
