@@ -22,8 +22,8 @@
 
         <!-- Шапка -->
         <Border Grid.Row="0" Classes="card" Margin="0,0,0,12" Padding="16">
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
                     <TextBlock Text="{Binding GameYouPlayAs, Source={x:Static loc:Localization.Instance}}"
                                Classes="muted" VerticalAlignment="Center" />
                     <Border Width="34" Height="34" CornerRadius="17"
@@ -34,16 +34,20 @@
                     </Border>
                 </StackPanel>
 
-                <TextBlock Grid.Column="1"
-                           Text="{Binding StatusMessage}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Classes="h2" Margin="0" />
-
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="6"
+                            HorizontalAlignment="Right" VerticalAlignment="Center">
                     <TextBlock Text="{Binding GameOpponentLabel, Source={x:Static loc:Localization.Instance}}"
                                Classes="muted" />
-                    <TextBlock Text="{Binding OpponentNickname}" Classes="muted" />
+                    <TextBlock Text="{Binding OpponentNickname}" Classes="muted" MaxWidth="160"
+                               TextTrimming="CharacterEllipsis" />
                 </StackPanel>
+
+                <!-- Статус — отдельной строкой во всю ширину карточки, чтобы длинный текст не наезжал на соседние блоки -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                           Text="{Binding StatusMessage}"
+                           HorizontalAlignment="Center" TextAlignment="Center"
+                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+                           Margin="0,8,0,0" Classes="h2" />
             </Grid>
         </Border>
 
@@ -137,11 +141,13 @@
             <Border Background="#CC0C3B2E"
                     IsVisible="{Binding IsGameOver}"
                     CornerRadius="12">
-                <Border Classes="card" MaxWidth="380"
+                <Border Classes="card" MaxWidth="420"
                         VerticalAlignment="Center" HorizontalAlignment="Center">
                     <StackPanel Spacing="14" HorizontalAlignment="Stretch">
                         <TextBlock Classes="h1" Margin="0"
                                    Text="{Binding StatusMessage}"
+                                   TextWrapping="Wrap" MaxWidth="360"
+                                   TextAlignment="Center"
                                    HorizontalAlignment="Center" />
                         <TextBlock Text="{Binding Status, Converter={StaticResource StatusText}}"
                                    Classes="muted" HorizontalAlignment="Center" />
@@ -158,7 +164,7 @@
         </Grid>
 
         <!-- Подвал -->
-        <DockPanel Grid.Row="2" Margin="0,12,0,0">
+        <DockPanel Grid.Row="2" Margin="0,12,0,0" IsVisible="{Binding !IsGameOver}">
             <Button Content="{Binding BackToMenuButton, Source={x:Static loc:Localization.Instance}}"
                     DockPanel.Dock="Right"
                     Command="{Binding BackToMenuCommand}" />

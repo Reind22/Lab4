@@ -93,10 +93,13 @@ tests/
 - [`waiting.png`](docs/images/waiting.png) — ожидание соперника
 - [`lobby.png`](docs/images/lobby.png) — список открытых игр
 - [`game.png`](docs/images/game.png) — игровое поле
+- [`game-over.png`](docs/images/game-over.png) — экран результата партии
 
 | Меню | Ожидание | Лобби | Игра |
 |---|---|---|---|
 | ![Меню](docs/images/main-menu.png) | ![Ожидание](docs/images/waiting.png) | ![Лобби](docs/images/lobby.png) | ![Игра](docs/images/game.png) |
+
+![Результат партии](docs/images/game-over.png)
 
 ## Разработка
 

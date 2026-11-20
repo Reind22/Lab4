@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -114,8 +115,17 @@ public sealed partial class GameViewModel : ObservableObject, IDisposable
         };
     }
 
-    private void OnServerError(object? sender, ErrorMessage error) =>
+    private void OnServerError(object? sender, ErrorMessage error)
+    {
+        // После конца партии сообщение об уходе соперника уже не важно:
+        // результат на экране должен остаться тем, который определил сервер.
+        if (IsGameOver && string.Equals(error.Code, "opponent_left", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
         StatusMessage = error.Message;
+    }
 
     private void UpdateClickability()
     {
